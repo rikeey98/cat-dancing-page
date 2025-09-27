@@ -1,0 +1,206 @@
+.dancing-cat-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3rem;
+  padding: 2rem;
+}
+
+.cat-wrapper {
+  width: 200px;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  transition: all 0.3s ease;
+}
+
+.cat-wrapper:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 40px rgba(31, 38, 135, 0.5);
+}
+
+.cat-image {
+  width: 160px;
+  height: 160px;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+}
+
+/* Dancing Animation */
+.cat-wrapper.dancing {
+  animation: catDance var(--animation-speed, 2s) infinite ease-in-out;
+}
+
+.cat-wrapper.dancing .cat-image {
+  animation: catRotate calc(var(--animation-speed, 2s) / 2) infinite alternate ease-in-out,
+             catBounce calc(var(--animation-speed, 2s) * 0.4) infinite ease-in-out,
+             catWiggle calc(var(--animation-speed, 2s) * 0.75) infinite ease-in-out;
+}
+
+/* Keyframes for different dance movements */
+@keyframes catDance {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  25% {
+    transform: translateY(-10px) scale(1.05);
+  }
+  50% {
+    transform: translateY(0) scale(1.1);
+  }
+  75% {
+    transform: translateY(-15px) scale(1.05);
+  }
+}
+
+@keyframes catRotate {
+  0% {
+    transform: rotate(-5deg);
+  }
+  100% {
+    transform: rotate(5deg);
+  }
+}
+
+@keyframes catBounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes catWiggle {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-8px);
+  }
+  75% {
+    transform: translateX(8px);
+  }
+}
+
+
+
+/* Animation performance optimization */
+.cat-wrapper.dancing,
+.cat-wrapper.dancing .cat-image {
+  will-change: transform;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .dancing-cat-container {
+    padding: 1rem;
+    gap: 2rem;
+  }
+
+  .cat-wrapper {
+    width: 150px;
+    height: 150px;
+  }
+
+  .cat-image {
+    width: 120px;
+    height: 120px;
+  }
+
+  .control-button {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+  }
+
+  .app-header h1 {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .dancing-cat-container {
+    padding: 0.5rem;
+    gap: 1.5rem;
+  }
+
+  .cat-wrapper {
+    width: 120px;
+    height: 120px;
+  }
+
+  .cat-image {
+    width: 90px;
+    height: 90px;
+  }
+
+  .control-button {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+  }
+
+  .app-header h1 {
+    font-size: 1.5rem;
+  }
+
+  /* Reduce animation intensity on mobile */
+  @keyframes catBounce {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  @keyframes catDance {
+    0%, 100% {
+      transform: translateY(0) scale(1);
+    }
+    25% {
+      transform: translateY(-5px) scale(1.02);
+    }
+    50% {
+      transform: translateY(0) scale(1.05);
+    }
+    75% {
+      transform: translateY(-8px) scale(1.02);
+    }
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .cat-wrapper {
+    border: 2px solid #000;
+    background: rgba(255, 255, 255, 0.8);
+  }
+
+  .control-button {
+    border: 2px solid #000;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .cat-wrapper.dancing,
+  .cat-wrapper.dancing .cat-image,
+  .control-button.playing {
+    animation: none;
+  }
+
+  .cat-wrapper:hover {
+    transform: none;
+  }
+
+  .control-button:hover {
+    transform: none;
+  }
+}
